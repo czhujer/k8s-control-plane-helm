@@ -10,3 +10,6 @@ server:
     repository: rancher/k3s
     tag: v1.19.4-k3s1
     pullPolicy: Always
+
+  service:
+    enabled: true

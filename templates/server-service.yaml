@@ -1,0 +1,15 @@
+{{- if .Values.server.service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: k3s-server
+  name: server
+spec:
+  ports:
+    - name: "6443"
+      port: 6443
+      targetPort: 6443
+  selector:
+    k8s-app: k3s-server
+{{- end }}
