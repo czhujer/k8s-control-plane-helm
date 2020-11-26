@@ -1,67 +1,62 @@
+{{- if .Values.server.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f k3s-docker-compose.yaml
-    kompose.version: 1.22.0 (955b78124)
-  creationTimestamp: null
   labels:
-    io.kompose.service: server
-  name: server
+    k8s-app: k3s-server
+  name: k3s-server
 spec:
-  replicas: 1
+  replicas: {{ .Values.server.replicas }}
+  {{- with .Values.server.updateStrategy }}
+  strategy: {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
-      io.kompose.service: server
-  strategy:
-    type: Recreate
+      k8s-app: k3s-server
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert -f k3s-docker-compose.yaml
-        kompose.version: 1.22.0 (955b78124)
-      creationTimestamp: null
       labels:
-        io.kompose.service: server
+        k8s-app: k3s-server
     spec:
       containers:
         - args:
             - server
+            - --flannel-backend=none
+            - --disable-cloud-controller
+            - --disable=traefik
+            - --disable=metrics-server
           env:
             - name: K3S_KUBECONFIG_MODE
               value: "666"
             - name: K3S_KUBECONFIG_OUTPUT
               value: /output/kubeconfig.yaml
             - name: K3S_TOKEN
-              value: K3S_TOKEN
-          image: rancher/k3s:latest
-          name: server
+              value: "159182491624237"
+          image: {{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}
+          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+          name: k3s-server
           ports:
             - containerPort: 6443
           resources: {}
-          securityContext:
-            privileged: true
           volumeMounts:
-            - mountPath: /var/lib/rancher/k3s
-              name: k3s-server
-            - mountPath: /output
-              name: server-claim1
-            - mountPath: /run
-              name: server-tmpfs0
-            - mountPath: /var/run
-              name: server-tmpfs1
+            - name: k3s-server-datadir
+              mountPath: /var/lib/rancher/k3s
+            - name: server-output
+              mountPath: /output
+            - name: server-tmpfs0
+              mountPath: /run
+            - name: server-tmpfs1
+              mountPath: /var/run
       restartPolicy: Always
       volumes:
-        - name: k3s-server
-          persistentVolumeClaim:
-            claimName: k3s-server
-        - name: server-claim1
-          persistentVolumeClaim:
-            claimName: server-claim1
-        - emptyDir:
+        - name: k3s-server-datadir
+          emptyDir: {}
+        - name: server-output
+          emptyDir: {}
+        - name: server-tmpfs0
+          emptyDir:
             medium: Memory
-          name: server-tmpfs0
-        - emptyDir:
+        - name: server-tmpfs1
+          emptyDir:
             medium: Memory
-          name: server-tmpfs1
-status: {}
+{{- end }}
