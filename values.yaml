@@ -11,6 +11,12 @@ server:
     tag: v1.19.4-k3s1
     pullPolicy: Always
 
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      interval: 10s
+
   service:
     enabled: true
 

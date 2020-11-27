@@ -1,0 +1,19 @@
+{{- if and (.Values.server.enabled) (.Values.server.prometheus.enabled) (.Values.server.prometheus.serviceMonitor.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: k3s-server
+spec:
+  selector:
+    matchLabels:
+      k8s-app: k3s-server
+  endpoints:
+    - port: metrics
+      interval: {{ .Values.server.prometheus.serviceMonitor.interval }}
+      honorLabels: true
+      path: /metrics
+    - port: metrics2
+      interval: {{ .Values.server.prometheus.serviceMonitor.interval }}
+      honorLabels: true
+      path: /metrics
+{{- end }}
