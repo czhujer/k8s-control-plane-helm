@@ -47,6 +47,126 @@ spec:
               mountPath: /run
             - name: server-tmpfs1
               mountPath: /var/run
+{{- if .Values.kubestatemetrics.sidecar.enabled }}
+        - name: kube-state-metrics
+          args:
+            {{ if .Values.kubestatemetrics.apiserver }}
+            - --apiserver={{ .Values.kubestatemetrics.apiserver }}
+            {{ end }}
+            {{ if .Values.kubestatemetrics.kubeconfig }}
+            - --kubeconfig={{ .Values.kubestatemetrics.kubeconfig }}
+            {{ end }}
+            {{ if .Values.kubestatemetrics.collectors.certificatesigningrequests }}
+            - --collectors=certificatesigningrequests
+            {{ end  }}
+            {{ if .Values.kubestatemetrics.collectors.configmaps }}
+            - --collectors=configmaps
+            {{ end  }}
+            {{ if .Values.kubestatemetrics.collectors.cronjobs  }}
+            - --collectors=cronjobs
+            {{  end  }}
+            {{ if .Values.kubestatemetrics.collectors.daemonsets  }}
+            - --collectors=daemonsets
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.deployments  }}
+            - --collectors=deployments
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.endpoints  }}
+            - --collectors=endpoints
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.horizontalpodautoscalers  }}
+            - --collectors=horizontalpodautoscalers
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.ingresses  }}
+            - --collectors=ingresses
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.jobs  }}
+            - --collectors=jobs
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.limitranges  }}
+            - --collectors=limitranges
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.mutatingwebhookconfigurations  }}
+            - --collectors=mutatingwebhookconfigurations
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.namespaces  }}
+            - --collectors=namespaces
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.networkpolicies  }}
+            - --collectors=networkpolicies
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.nodes  }}
+            - --collectors=nodes
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.persistentvolumeclaims  }}
+            - --collectors=persistentvolumeclaims
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.persistentvolumes  }}
+            - --collectors=persistentvolumes
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.poddisruptionbudgets  }}
+            - --collectors=poddisruptionbudgets
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.pods  }}
+            - --collectors=pods
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.replicasets  }}
+            - --collectors=replicasets
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.replicationcontrollers  }}
+            - --collectors=replicationcontrollers
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.resourcequotas  }}
+            - --collectors=resourcequotas
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.secrets  }}
+            - --collectors=secrets
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.services  }}
+            - --collectors=services
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.statefulsets  }}
+            - --collectors=statefulsets
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.storageclasses  }}
+            - --collectors=storageclasses
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.validatingwebhookconfigurations  }}
+            - --collectors=validatingwebhookconfigurations
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.verticalpodautoscalers  }}
+            - --collectors=verticalpodautoscalers
+            {{  end  }}
+            {{  if .Values.kubestatemetrics.collectors.volumeattachements  }}
+            - --collectors=volumeattachements
+            {{  end  }}
+            {{ if .Values.kubestatemetrics.namespace }}
+            - --namespace={{ .Values.kubestatemetrics.namespace }}
+          {{ end }}
+          volumeMounts:
+            - name: server-output
+              mountPath: /kubeconfig
+          imagePullPolicy: {{ .Values.kubestatemetrics.image.pullPolicy }}
+          image: "{{ .Values.kubestatemetrics.image.repository }}:{{ .Values.kubestatemetrics.image.tag }}"
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+{{- if .Values.kubestatemetrics.resources }}
+          resources:
+{{ toYaml .Values.kubestatemetrics.resources | indent 10 }}
+{{- end }}
+{{- end }}
       restartPolicy: Always
       volumes:
         - name: k3s-server-datadir

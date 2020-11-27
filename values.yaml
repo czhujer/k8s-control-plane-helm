@@ -13,3 +13,88 @@ server:
 
   service:
     enabled: true
+
+kubestatemetrics:
+  standalone:
+    enabled: false
+
+  sidecar:
+    enabled: true
+
+  replicas: 1
+
+  image:
+    repository: quay.io/coreos/kube-state-metrics
+    tag: v1.9.7
+    pullPolicy: Always
+
+  ## Node labels for pod assignment
+  ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+
+  ## Affinity settings for pod assignment
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+  ## Tolerations for pod assignment
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+
+  ## Assign a PriorityClassName to pods if set
+  # priorityClassName: ""
+
+  serviceAccount:
+    # Specifies whether a ServiceAccount should be created, require rbac true
+    create: false
+    # The name of the ServiceAccount to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name:
+    # Reference to one or more secrets to be used when pulling images
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    imagePullSecrets: []
+
+  ## ApiServer URL
+  # apiserver: ""
+
+  ## kubeconfig
+  kubeconfig: /kubeconfig/kubeconfig.yaml
+
+  # Available collectors for kube-state-metrics. By default all available
+  # collectors are enabled.
+  collectors:
+    certificatesigningrequests: true
+    configmaps: true
+    cronjobs: true
+    daemonsets: true
+    deployments: true
+    endpoints: true
+    horizontalpodautoscalers: true
+    ingresses: true
+    jobs: true
+    limitranges: true
+    mutatingwebhookconfigurations: false
+    namespaces: true
+    networkpolicies: false
+    nodes: true
+    persistentvolumeclaims: true
+    persistentvolumes: true
+    poddisruptionbudgets: true
+    pods: true
+    replicasets: true
+    replicationcontrollers: true
+    resourcequotas: true
+    secrets: true
+    services: true
+    statefulsets: true
+    storageclasses: true
+    validatingwebhookconfigurations: false
+    verticalpodautoscalers: false
+    volumeattachements: false
+
+  # Namespace to be enabled for collecting resources. By default all namespaces are collected.
+  # namespace: ""
+
+  securityContext:
+    enabled: true
+    runAsUser: 65534
+    fsGroup: 65534

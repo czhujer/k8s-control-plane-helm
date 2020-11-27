@@ -1,0 +1,156 @@
+{{- if .Values.kubestatemetrics.standalone.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-state-metrics
+  labels:
+    app.kubernetes.io/name: kube-state-metrics
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kube-state-metrics
+  replicas: {{ .Values.kubestatemetrics.replicas }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kube-state-metrics
+        app.kubernetes.io/instance: "{{ .Release.Name }}"
+    spec:
+      serviceAccountName: {{ template "kube-state-metrics.serviceAccountName" . }}
+      {{- if .Values.kubestatemetrics.securityContext.enabled }}
+      securityContext:
+        fsGroup: {{ .Values.kubestatemetrics.securityContext.fsGroup }}
+        runAsUser: {{ .Values.kubestatemetrics.securityContext.runAsUser }}
+      {{- end }}
+    {{- if .Values.kubestatemetrics.priorityClassName }}
+      priorityClassName: {{ .Values.kubestatemetrics.priorityClassName }}
+    {{- end }}
+      containers:
+      - name: kube-state-metrics
+        args:
+{{ if .Values.kubestatemetrics.apiserver }}
+        - --apiserver={{ .Values.kubestatemetrics.apiserver }}
+{{ end }}
+{{ if .Values.kubestatemetrics.kubeconfig }}
+        - --kubeconfig={{ .Values.kubestatemetrics.kubeconfig }}
+{{ end }}
+{{ if .Values.kubestatemetrics.collectors.certificatesigningrequests }}
+        - --collectors=certificatesigningrequests
+{{ end  }}
+{{ if .Values.kubestatemetrics.collectors.configmaps }}
+        - --collectors=configmaps
+{{ end  }}
+{{ if .Values.kubestatemetrics.collectors.cronjobs  }}
+        - --collectors=cronjobs
+{{  end  }}
+{{ if .Values.kubestatemetrics.collectors.daemonsets  }}
+        - --collectors=daemonsets
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.deployments  }}
+        - --collectors=deployments
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.endpoints  }}
+        - --collectors=endpoints
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.horizontalpodautoscalers  }}
+        - --collectors=horizontalpodautoscalers
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.ingresses  }}
+        - --collectors=ingresses
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.jobs  }}
+        - --collectors=jobs
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.limitranges  }}
+        - --collectors=limitranges
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.mutatingwebhookconfigurations  }}
+        - --collectors=mutatingwebhookconfigurations
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.namespaces  }}
+        - --collectors=namespaces
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.networkpolicies  }}
+        - --collectors=networkpolicies
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.nodes  }}
+        - --collectors=nodes
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.persistentvolumeclaims  }}
+        - --collectors=persistentvolumeclaims
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.persistentvolumes  }}
+        - --collectors=persistentvolumes
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.poddisruptionbudgets  }}
+        - --collectors=poddisruptionbudgets
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.pods  }}
+        - --collectors=pods
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.replicasets  }}
+        - --collectors=replicasets
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.replicationcontrollers  }}
+        - --collectors=replicationcontrollers
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.resourcequotas  }}
+        - --collectors=resourcequotas
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.secrets  }}
+        - --collectors=secrets
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.services  }}
+        - --collectors=services
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.statefulsets  }}
+        - --collectors=statefulsets
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.storageclasses  }}
+        - --collectors=storageclasses
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.validatingwebhookconfigurations  }}
+        - --collectors=validatingwebhookconfigurations
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.verticalpodautoscalers  }}
+        - --collectors=verticalpodautoscalers
+{{  end  }}
+{{  if .Values.kubestatemetrics.collectors.volumeattachements  }}
+        - --collectors=volumeattachements
+{{  end  }}
+{{ if .Values.kubestatemetrics.namespace }}
+        - --namespace={{ .Values.kubestatemetrics.namespace }}
+{{ end }}
+        imagePullPolicy: {{ .Values.kubestatemetrics.image.pullPolicy }}
+        image: "{{ .Values.kubestatemetrics.image.repository }}:{{ .Values.kubestatemetrics.image.tag }}"
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+{{- if .Values.kubestatemetrics.resources }}
+        resources:
+{{ toYaml .Values.kubestatemetrics.resources | indent 10 }}
+{{- end }}
+{{- if .Values.kubestatemetrics.affinity }}
+      affinity:
+{{ toYaml .Values.kubestatemetrics.affinity | indent 8 }}
+{{- end }}
+{{- if .Values.kubestatemetrics.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.kubestatemetrics.nodeSelector | indent 8 }}
+{{- end }}
+{{- if .Values.kubestatemetrics.tolerations }}
+      tolerations:
+{{ toYaml .Values.kubestatemetrics.tolerations | indent 8 }}
+{{- end }}
+{{- end }}
