@@ -25,6 +25,7 @@ spec:
             - --disable-cloud-controller
             - --disable=traefik
             - --disable=metrics-server
+            - --disable-agent
           env:
             - name: K3S_KUBECONFIG_MODE
               value: "666"
