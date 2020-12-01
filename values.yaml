@@ -20,6 +20,10 @@ server:
   service:
     enabled: true
 
+  serviceNodeport:
+    enabled: true
+    portApiServer: 30443
+
 kubestatemetrics:
   standalone:
     enabled: false

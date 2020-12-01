@@ -1,21 +1,17 @@
-{{- if .Values.server.service.enabled }}
+{{- if .Values.server.serviceNodeport.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
   labels:
     k8s-app: k3s-server
-  name: k3s-server
+  name: k3s-server-nodeport
 spec:
+  type: NodePort
   ports:
     - name: "apiserver"
       port: 6443
       targetPort: 6443
-    - name: "metrics"
-      port: 8080
-      targetPort: 8080
-    - name: "metrics2"
-      port: 8081
-      targetPort: 8081
+      nodePort: {{ .Values.server.serviceNodeport.portApiServer }}
   selector:
     k8s-app: k3s-server
 {{- end }}
