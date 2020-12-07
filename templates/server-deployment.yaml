@@ -179,23 +179,17 @@ spec:
         - name: server-tmpfs1
           emptyDir:
             medium: Memory
-{{- if .Values.server.persistentVolume.enabled }}
-  volumeClaimTemplates:
-    - metadata:
-        name: server-output
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: "{{ .Values.server.persistentVolume.size }}"
-{{- else }}
         - name: server-output
+        {{- if .Values.server.persistentVolume.enabled }}
+          persistentVolumeClaim:
+            claimName: server-output
+        {{- else }}
           emptyDir:
           {{- if .Values.server.emptyDir.sizeLimit }}
             sizeLimit: {{ .Values.server.emptyDir.sizeLimit }}
           {{- else }}
             {}
           {{- end -}}
+        {{- end -}}
 {{- end }}
 {{- end }}
