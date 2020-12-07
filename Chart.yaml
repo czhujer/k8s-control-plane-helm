@@ -4,7 +4,7 @@ name: k8s-control-plane
 keywords:
   - kubernetes
   - etcd
-version: 0.2.18
+version: 0.3.0
 maintainers:
   - name: Patrik Majer
     email: patrik.majer@firma.seznam.cz

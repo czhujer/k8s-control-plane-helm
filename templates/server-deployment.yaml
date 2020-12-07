@@ -44,7 +44,7 @@ spec:
             - name: k3s-server-datadir
               mountPath: /var/lib/rancher/k3s
             - name: server-output
-              mountPath: /output
+              mountPath: {{ .Values.server.persistentVolume.mountPath }}
             - name: server-tmpfs0
               mountPath: /run
             - name: server-tmpfs1
@@ -173,12 +173,29 @@ spec:
       volumes:
         - name: k3s-server-datadir
           emptyDir: {}
-        - name: server-output
-          emptyDir: {}
         - name: server-tmpfs0
           emptyDir:
             medium: Memory
         - name: server-tmpfs1
           emptyDir:
             medium: Memory
+{{- if .Values.server.persistentVolume.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: server-output
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: "{{ .Values.server.persistentVolume.size }}"
+{{- else }}
+        - name: server-output
+          emptyDir:
+          {{- if .Values.server.emptyDir.sizeLimit }}
+            sizeLimit: {{ .Values.server.emptyDir.sizeLimit }}
+          {{- else }}
+            {}
+          {{- end -}}
+{{- end }}
 {{- end }}
