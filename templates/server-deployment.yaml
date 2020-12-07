@@ -182,7 +182,7 @@ spec:
         - name: server-output
         {{- if .Values.server.persistentVolume.enabled }}
           persistentVolumeClaim:
-            claimName: server-output
+            claimName: server-output-pvc
         {{- else }}
           emptyDir:
           {{- if .Values.server.emptyDir.sizeLimit }}

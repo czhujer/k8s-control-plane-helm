@@ -5,7 +5,7 @@ kind: PersistentVolumeClaim
 metadata:
   labels:
     k8s-app: k3s-server
-  name: server-output
+  name: server-output-pvc
 spec:
   accessModes:
     - ReadWriteOnce
