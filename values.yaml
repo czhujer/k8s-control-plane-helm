@@ -315,6 +315,10 @@ ipam:
     # -- IPv6 CIDR mask size to delegate to individual nodes for IPAM.
     clusterPoolIPv6MaskSize: 120
 
+hubble:
+  # -- Enable Hubble (true by default).
+  enabled: false
+
 # -- Define serviceAccount names for components.
 # @default -- Component's fully qualified name.
 serviceAccounts:
