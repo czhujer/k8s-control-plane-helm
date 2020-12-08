@@ -117,3 +117,127 @@ kubestatemetrics:
     enabled: true
     runAsUser: 65534
     fsGroup: 65534
+
+# cilium part
+operator:
+  # -- Enable the cilium-operator component (required).
+  enabled: true
+
+  # -- cilium-operator image.
+  image:
+    repository: quay.io/cilium/operator
+    tag: latest
+    pullPolicy: Always
+
+  # -- Number of replicas to run for the cilium-operator deployment
+  replicas: 2
+
+  # -- cilium-operator priorityClassName
+  priorityClassName: ""
+
+  # -- cilium-operator update strategy
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+
+  # -- cilium-operator affinity
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: io.cilium/app
+                operator: In
+                values:
+                  - operator
+          topologyKey: kubernetes.io/hostname
+
+
+  # -- Additional cilium-etcd-operator container arguments
+  #
+  extraArgs: {}
+
+  extraEnv: {}
+
+  # -- Additional InitContainers to initialize the pod
+  #
+  extraInitContainers: []
+
+  # -- Additional cilium-operator hostPath mounts
+  extraHostPathMounts: []
+    # - name: host-mnt-data
+    #   mountPath: /host/mnt/data
+    #   hostPath: /mnt/data
+    #   hostPathType: Directory
+    #   readOnly: true
+  #   mountPropagation: HostToContainer
+
+  extraConfigmapMounts: []
+    # - name: certs-configmap
+    #   mountPath: /certs
+    #   configMap: certs-configmap
+  #   readOnly: true
+
+  # -- Node tolerations for cilium-operator scheduling to nodes with taints
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  #
+  tolerations:
+    - operator: Exists
+      # - key: "key"
+      #   operator: "Equal|Exists"
+      #   value: "value"
+      #   effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+
+  # -- Node labels for cilium-operator pod assignment
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
+  #
+  nodeSelector: {}
+
+  # -- Annotations to be added to cilium-operator pods
+  #
+  podAnnotations: {}
+
+  # -- Labels to be added to cilium-operator pods
+  #
+  podLabels: {}
+
+  # -- PodDisruptionBudget settings
+  # ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+  #
+  podDisruptionBudget:
+    enabled: false
+    maxUnavailable: 1
+
+  # -- cilium-operator resource limits & requests
+  # ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  #
+  resources: {}
+    # limits:
+    #   cpu: 1000m
+    #   memory: 1Gi
+    # requests:
+    #   cpu: 100m
+  #   memory: 128Mi
+
+  # -- Security context to be added to cilium-operator pods
+  #
+  securityContext: {}
+  # runAsUser: 0
+
+  endpointGCInterval: "5m0s"
+  identityGCInterval: "15m0s"
+  identityHeartbeatTimeout: "30m0s"
+
+  # -- Enable prometheus metrics for cilium-operator on the configured port at
+  # /metrics
+  prometheus:
+    enabled: true
+    port: 6942
+    serviceMonitor:
+      # -- Enable service monitors.
+      # This requires the prometheus CRDs to be available (see https://github.com/prometheus-operator/prometheus-operator/blob/master/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml)
+      ##
+      enabled: true
+
