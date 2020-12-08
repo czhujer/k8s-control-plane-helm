@@ -292,6 +292,10 @@ k8s: {}
   # range via the Kubernetes node resource
 # requireIPv46PodCIDR: false
 
+# TODO: Add documentation
+endpointHealthChecking:
+  enabled: true
+
 endpointRoutes:
   # -- Enable use of per endpoint routes instead of routing via
   # the cilium_host interface.
