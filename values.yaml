@@ -274,6 +274,10 @@ bpf:
   # for implementing Layer 7 policy.
   # tproxy: true
 
+# -- Enables masquerading of traffic leaving the node for destinations
+# outside of the cluster.
+masquerade: false
+
 gke:
   # -- Enable Google Kubernetes Engine integration
   enabled: false
@@ -329,6 +333,11 @@ endpointRoutes:
   # -- Enable use of per endpoint routes instead of routing via
   # the cilium_host interface.
   enabled: false
+
+# -- Configure whether to install iptables rules to allow for TPROXY
+# (L7 proxy injection), iptables-based masquerading and compatibility
+# with kube-proxy.
+installIptablesRules: false
 
 ipam:
   # -- Configure IP Address Management mode.
