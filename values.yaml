@@ -151,6 +151,20 @@ preflight:
   # -- Enable Cilium pre-flight resources (required for upgrade)
   enabled: false
 
+ipam:
+  # -- Configure IP Address Management mode.
+  # ref: https://docs.cilium.io/en/stable/concepts/networking/ipam/
+  mode: "cluster-pool"
+  operator:
+    # -- IPv4 CIDR range to delegate to individual nodes for IPAM.
+    clusterPoolIPv4PodCIDR: "10.0.0.0/8"
+    # -- IPv4 CIDR mask size to delegate to individual nodes for IPAM.
+    clusterPoolIPv4MaskSize: 24
+    # -- IPv6 CIDR range to delegate to individual nodes for IPAM.
+    clusterPoolIPv6PodCIDR: "fd00::/104"
+    # -- IPv6 CIDR mask size to delegate to individual nodes for IPAM.
+    clusterPoolIPv6MaskSize: 120
+
 # -- Define serviceAccount names for components.
 # @default -- Component's fully qualified name.
 serviceAccounts:
