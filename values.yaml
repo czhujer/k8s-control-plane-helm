@@ -161,6 +161,10 @@ cluster:
   # clusters and in the range of 1 to 255. Only required for Cluster Mesh.
   id:
 
+encryption:
+  # -- Enable transparent network encryption.
+  enabled: false
+
 # -- Configure Istio proxy options.
 proxy:
   prometheus:
