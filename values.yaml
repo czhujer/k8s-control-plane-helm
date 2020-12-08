@@ -122,6 +122,10 @@ kubestatemetrics:
 # cilium part
 #
 
+pprof:
+  # -- Enable Go pprof debugging
+  enabled: false
+
 # -- Configure prometheus metrics on the configured port at /metrics
 prometheus:
   enabled: false
