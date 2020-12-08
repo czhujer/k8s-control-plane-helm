@@ -8,7 +8,7 @@ metadata:
   name: server-output-pvc
 spec:
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteMany
   resources:
     requests:
       storage: "{{ .Values.server.persistentVolume.size }}"
