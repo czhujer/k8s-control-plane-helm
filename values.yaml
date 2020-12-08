@@ -139,6 +139,10 @@ ipv6:
   # -- Enable IPv6 support.
   enabled: false
 
+cni:
+  # -- Install the CNI configuration and binary files into the filesystem.
+  install: false
+
 # -- Configure image pull secrets for pulling container images
 imagePullSecrets:
 # - name: "image-pull-secret"
