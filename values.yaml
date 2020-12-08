@@ -136,6 +136,10 @@ imagePullSecrets:
 
 # kubeConfigPath: ~/.kube/config
 
+azure:
+  # -- Enable Azure integration
+  enabled: false
+
 # -- Define serviceAccount names for components.
 # @default -- Component's fully qualified name.
 serviceAccounts:
