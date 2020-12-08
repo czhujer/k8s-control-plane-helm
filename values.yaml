@@ -118,7 +118,17 @@ kubestatemetrics:
     runAsUser: 65534
     fsGroup: 65534
 
+#
 # cilium part
+#
+
+# -- Define serviceAccount names for components.
+# @default -- Component's fully qualified name.
+serviceAccounts:
+  operator:
+    create: true
+    annotations: {}
+
 operator:
   # -- Enable the cilium-operator component (required).
   enabled: true
