@@ -143,6 +143,13 @@ cni:
   # -- Install the CNI configuration and binary files into the filesystem.
   install: false
 
+  # -- Configure chaining on top of other CNI plugins. Possible values:
+  #  - none
+  #  - generic-veth
+  #  - aws-cni
+  #  - portmap
+  chainingMode: none
+
 cluster:
   # -- Name of the cluster. Only required for Cluster Mesh.
   name: default
