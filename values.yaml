@@ -374,6 +374,10 @@ operator:
   ClusterRoleBinding:
     enabled: false
 
+  persistentVolume:
+    mountPath: /output
+    enabled: false
+
   # -- cilium-operator image.
   image:
     repository: quay.io/cilium/operator
