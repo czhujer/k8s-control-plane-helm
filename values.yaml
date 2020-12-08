@@ -168,6 +168,10 @@ azure:
   # -- Enable Azure integration
   enabled: false
 
+gke:
+  # -- Enable Google Kubernetes Engine integration
+  enabled: false
+
 bpf:
   clockProbe: false
 
