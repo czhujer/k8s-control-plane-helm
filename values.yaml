@@ -143,6 +143,14 @@ cni:
   # -- Install the CNI configuration and binary files into the filesystem.
   install: false
 
+# -- Configure Istio proxy options.
+proxy:
+  prometheus:
+    port: "9095"
+  # -- Regular expression matching compatible Istio sidecar istio-proxy
+  # container image names
+  sidecarImageRegex: "cilium/istio_proxy"
+
 # -- Configure image pull secrets for pulling container images
 imagePullSecrets:
 # - name: "image-pull-secret"
