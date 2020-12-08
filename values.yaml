@@ -121,6 +121,11 @@ kubestatemetrics:
 #
 # cilium part
 #
+
+# -- Configure prometheus metrics on the configured port at /metrics
+prometheus:
+  enabled: false
+
 debug:
   # -- Enable debug logging
   enabled: false
