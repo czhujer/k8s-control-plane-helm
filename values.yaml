@@ -144,6 +144,13 @@ etcd:
   # -- Enable etcd mode for the agent.
   enabled: false
 
+# -- Install the cilium agent resources.
+agent: true
+
+preflight:
+  # -- Enable Cilium pre-flight resources (required for upgrade)
+  enabled: false
+
 # -- Define serviceAccount names for components.
 # @default -- Component's fully qualified name.
 serviceAccounts:
