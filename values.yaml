@@ -165,6 +165,9 @@ encryption:
   # -- Enable transparent network encryption.
   enabled: false
 
+# -- Configure maglev consistent hashing
+maglev: {}
+
 # -- Configure Istio proxy options.
 proxy:
   prometheus:
