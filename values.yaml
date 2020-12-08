@@ -368,6 +368,12 @@ operator:
   # -- Enable the cilium-operator component (required).
   enabled: true
 
+  clusterRole:
+    enabled: false
+
+  ClusterRoleBinding:
+    enabled: false
+
   # -- cilium-operator image.
   image:
     repository: quay.io/cilium/operator
