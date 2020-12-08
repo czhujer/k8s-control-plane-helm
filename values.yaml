@@ -29,6 +29,7 @@ server:
       false
     size: 100Mi
     mountPath: /output
+    storageClassName: rook-cephfs
 
   emptyDir:
     sizeLimit: ""

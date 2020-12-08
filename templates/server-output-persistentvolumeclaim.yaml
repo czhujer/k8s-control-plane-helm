@@ -12,5 +12,6 @@ spec:
   resources:
     requests:
       storage: "{{ .Values.server.persistentVolume.size }}"
+  storageClassName: {{ .Values.server.persistentVolume.storageClassName }}
 {{- end -}}
 {{- end -}}
