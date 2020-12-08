@@ -271,10 +271,15 @@ etcd:
   k8sService: false
 
 # -- Install the cilium agent resources.
-agent: true
+agent: false
 
 preflight:
   # -- Enable Cilium pre-flight resources (required for upgrade)
+  enabled: false
+
+# -- Configure BPF socket operations configuration
+sockops:
+  # enabled enables installation of socket options acceleration.
   enabled: false
 
 ipam:
