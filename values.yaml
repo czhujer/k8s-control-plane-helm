@@ -282,6 +282,16 @@ sockops:
   # enabled enables installation of socket options acceleration.
   enabled: false
 
+# -- Configure Kubernetes specific configuration
+k8s: {}
+  # -- requireIPv4PodCIDR enables waiting for Kubernetes to provide the PodCIDR
+  # range via the Kubernetes node resource
+  # requireIPv4PodCIDR: false
+
+  # -- requireIPv6PodCIDR enables waiting for Kubernetes to provide the PodCIDR
+  # range via the Kubernetes node resource
+# requireIPv46PodCIDR: false
+
 ipam:
   # -- Configure IP Address Management mode.
   # ref: https://docs.cilium.io/en/stable/concepts/networking/ipam/
