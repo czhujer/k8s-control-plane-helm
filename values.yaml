@@ -172,6 +172,11 @@ gke:
   # -- Enable Google Kubernetes Engine integration
   enabled: false
 
+# flannel is the flannel specific configuration
+flannel:
+  # enabled enables the flannel integration
+  enabled: false
+
 bpf:
   clockProbe: false
 
