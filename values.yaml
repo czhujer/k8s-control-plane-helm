@@ -121,6 +121,10 @@ kubestatemetrics:
 #
 # cilium part
 #
+debug:
+  # -- Enable debug logging
+  enabled: false
+  # verbose:
 
 ipv4:
   # -- Enable IPv4 support.
