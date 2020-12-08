@@ -165,6 +165,15 @@ cluster:
   # clusters and in the range of 1 to 255. Only required for Cluster Mesh.
   id:
 
+# TODO: Add documentation
+identityAllocationMode: "crd"
+
+# -- Enables the fallback compatibility solution for when the xt_socket kernel
+# module is missing and it is needed for the datapath L7 redirection to work
+# properly. See documentation for details on when this can be disabled:
+# http://docs.cilium.io/en/stable/install/system_requirements/#admin-kernel-version.
+enableXTSocketFallback: true
+
 encryption:
   # -- Enable transparent network encryption.
   enabled: false
