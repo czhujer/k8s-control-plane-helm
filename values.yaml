@@ -292,6 +292,11 @@ k8s: {}
   # range via the Kubernetes node resource
 # requireIPv46PodCIDR: false
 
+endpointRoutes:
+  # -- Enable use of per endpoint routes instead of routing via
+  # the cilium_host interface.
+  enabled: false
+
 ipam:
   # -- Configure IP Address Management mode.
   # ref: https://docs.cilium.io/en/stable/concepts/networking/ipam/
