@@ -1,4 +1,4 @@
-{{- if and (.Values.agent) (not .Values.preflight.enabled) }}
+{{- if and (.Values.agent) (not .Values.preflight.enabled) (not .Values.operator.enabled} }
 {{- /*  Default values with backwards compatibility */ -}}
 {{- $defaultEnableCnpStatusUpdates := "true" -}}
 {{- $defaultBpfMapDynamicSizeRatio := 0.0 -}}
