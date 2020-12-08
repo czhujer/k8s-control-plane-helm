@@ -131,6 +131,10 @@ debug:
   enabled: false
   # verbose:
 
+# -- Configure the eBPF-based ip-masq-agent
+ipMasqAgent:
+  enabled: false
+
 ipv4:
   # -- Enable IPv4 support.
   enabled: true
