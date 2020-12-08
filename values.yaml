@@ -186,18 +186,18 @@ imagePullSecrets:
 
 # kubeConfigPath: ~/.kube/config
 
+# -- Enable installation of PodCIDR routes between worker
+# nodes if worker nodes share a common L2 network segment.
+autoDirectNodeRoutes: false
+
 azure:
   # -- Enable Azure integration
   enabled: false
 
-gke:
-  # -- Enable Google Kubernetes Engine integration
-  enabled: false
-
-# flannel is the flannel specific configuration
-flannel:
-  # enabled enables the flannel integration
-  enabled: false
+# -- Optimize TCP and UDP workloads and enable rate-limiting traffic from
+# individual Pods with EDT (Earliest Departure Time)
+# through the "kubernetes.io/egress-bandwidth" Pod annotation.
+bandwidthManager: false
 
 bpf:
   clockProbe: false
@@ -260,6 +260,15 @@ bpf:
   # -- Configure the eBPF-based TPROXY to reduce reliance on iptables rules
   # for implementing Layer 7 policy.
   # tproxy: true
+
+gke:
+  # -- Enable Google Kubernetes Engine integration
+  enabled: false
+
+# flannel is the flannel specific configuration
+flannel:
+  # enabled enables the flannel integration
+  enabled: false
 
 etcd:
   # -- Enable etcd mode for the agent.
