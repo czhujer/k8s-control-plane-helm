@@ -505,3 +505,5 @@ operator:
       ##
       enabled: true
 
+  # extra kubeconfig
+  kubeconfig: /kubeconfig/kubeconfig-service.yaml
