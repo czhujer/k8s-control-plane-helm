@@ -1,0 +1,17 @@
+{{- if .Values.server.enabled -}}
+{{- if .Values.server.persistentVolumeData.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    k8s-app: k3s-server
+  name: server-data-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: "{{ .Values.server.persistentVolumeData.size }}"
+  storageClassName: {{ .Values.server.persistentVolumeData.storageClassName }}
+{{- end -}}
+{{- end -}}

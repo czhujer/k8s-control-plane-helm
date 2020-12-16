@@ -172,7 +172,17 @@ spec:
       restartPolicy: Always
       volumes:
         - name: k3s-server-datadir
-          emptyDir: {}
+        {{- if .Values.server.persistentVolumeData.enabled }}
+          persistentVolumeClaim:
+            claimName: server-data-pvc
+        {{- else }}
+          emptyDir:
+          {{- if .Values.server.emptyDirData.sizeLimit }}
+            sizeLimit: {{ .Values.server.emptyDirData.sizeLimit }}
+          {{- else }}
+            {}
+          {{- end -}}
+        {{- end }}
         - name: server-tmpfs0
           emptyDir:
             medium: Memory
