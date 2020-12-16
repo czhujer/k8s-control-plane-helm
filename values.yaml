@@ -507,3 +507,7 @@ operator:
 
   # extra kubeconfig
   kubeconfig: /kubeconfig/kubeconfig-service.yaml
+
+  # namespace for saving "state"
+  namespace: "kube-system"
+

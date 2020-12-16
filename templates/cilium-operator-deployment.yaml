@@ -57,6 +57,7 @@ spec:
         {{- if .Values.operator.kubeconfig }}
         - --k8s-kubeconfig-path={{ .Values.operator.kubeconfig }}
         {{- end }}
+        - --k8s-namespace={{ .Values.operator.namespace }}
         command:
 {{- if .Values.eni }}
         - cilium-operator-aws
@@ -71,11 +72,6 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.nodeName
-        - name: CILIUM_K8S_NAMESPACE
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
         - name: CILIUM_DEBUG
           valueFrom:
             configMapKeyRef:
