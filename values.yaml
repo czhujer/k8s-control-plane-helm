@@ -25,8 +25,7 @@ server:
     portApiServer: 30443
 
   persistentVolume:
-    enabled:
-      false
+    enabled: false
     size: 100Mi
     mountPath: /output
     storageClassName: rook-cephfs
