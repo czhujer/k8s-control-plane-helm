@@ -197,6 +197,17 @@ spec:
         resources:
           {{- toYaml .Values.operator.resources | trim | nindent 10 }}
 {{- end }}
+      initContainers:
+        - name: copyconfig
+          image: quay.io/prometheus/busybox:latest
+          imagePullPolicy: Always
+          command:
+            - 'sh'
+            - '-c'
+            - "sed 's/127.0.0.1/k3s-server/' /kubeconfig/kubeconfig.yaml > /kubeconfig/kubeconfig-service.yaml"
+          volumeMounts:
+            - mountPath: /kubeconfig
+              name: server-output
       hostNetwork: true
 {{- if .Values.etcd.managed }}
       # In managed etcd mode, Cilium must be able to resolve the DNS name of

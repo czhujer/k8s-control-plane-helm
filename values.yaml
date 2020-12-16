@@ -384,7 +384,7 @@ operator:
     enabled: false
 
   persistentVolume:
-    mountPath: /output
+    mountPath: /kubeconfig
     enabled: false
 
   # -- cilium-operator image.
