@@ -4,7 +4,7 @@ name: k8s-control-plane
 keywords:
   - kubernetes
   - cilium-operator
-version: 0.4.1
+version: 0.4.2
 maintainers:
   - name: Patrik Majer
     email: patrik.majer@firma.seznam.cz
