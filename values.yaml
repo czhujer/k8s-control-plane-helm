@@ -1,6 +1,8 @@
 server:
   enabled: true
 
+  k3s_token: ~
+
   replicas: 1
 
   updateStrategy:

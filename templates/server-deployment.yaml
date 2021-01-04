@@ -33,7 +33,7 @@ spec:
             - name: K3S_KUBECONFIG_OUTPUT
               value: /output/kubeconfig.yaml
             - name: K3S_TOKEN
-              value: "159182491624237"
+              value: "{{ .Values.server.k3s_token }}"
           image: {{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           name: k3s-server
