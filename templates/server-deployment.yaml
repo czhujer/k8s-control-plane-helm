@@ -40,6 +40,11 @@ spec:
           ports:
             - containerPort: 6443
           resources: {}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
           volumeMounts:
             - name: k3s-server-datadir
               mountPath: /var/lib/rancher/k3s
@@ -150,6 +155,11 @@ spec:
               mountPath: /kubeconfig
           imagePullPolicy: {{ .Values.kubestatemetrics.image.pullPolicy }}
           image: "{{ .Values.kubestatemetrics.image.repository }}:{{ .Values.kubestatemetrics.image.tag }}"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
           ports:
             - containerPort: 8080
           livenessProbe:

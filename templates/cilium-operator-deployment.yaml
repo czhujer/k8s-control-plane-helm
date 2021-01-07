@@ -204,6 +204,11 @@ spec:
           volumeMounts:
             - mountPath: /kubeconfig
               name: server-output
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
       hostNetwork: false
 {{- if .Values.etcd.managed }}
       # In managed etcd mode, Cilium must be able to resolve the DNS name of
