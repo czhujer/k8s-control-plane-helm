@@ -207,6 +207,7 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            privileged: false
             capabilities:
               drop: ["ALL"]
       hostNetwork: false

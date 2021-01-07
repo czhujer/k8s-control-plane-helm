@@ -43,6 +43,7 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            privileged: false
             capabilities:
               drop: ["ALL"]
           volumeMounts:
@@ -158,6 +159,7 @@ spec:
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
+            privileged: false
             capabilities:
               drop: ["ALL"]
           ports:
