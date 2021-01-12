@@ -140,10 +140,12 @@ spec:
 {{- end }}
         imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
         name: cilium-operator
-{{- if .Values.operator.prometheus.enabled }}
         ports:
+        - containerPort: 9234
+          name: healthz
+          protocol: TCP
+{{- if .Values.operator.prometheus.enabled }}
         - containerPort: {{ .Values.operator.prometheus.port }}
-          hostPort: {{ .Values.operator.prometheus.port }}
           name: prometheus
           protocol: TCP
 {{- end }}
