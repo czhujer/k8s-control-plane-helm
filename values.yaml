@@ -513,3 +513,7 @@ operator:
   # namespace for saving "state"
   namespace: "kube-system"
 
+  # --operator-api-serve-addr string
+  # Address to serve API requests (default "localhost:9234")
+  APIServeAddr: "localhost:9234"
+

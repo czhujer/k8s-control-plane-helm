@@ -58,6 +58,7 @@ spec:
         - --k8s-kubeconfig-path={{ .Values.operator.kubeconfig }}
         {{- end }}
         - --k8s-namespace={{ .Values.operator.namespace }}
+        - --operator-api-serve-addr={{ .Values.operator.APIServeAddr }}
         command:
 {{- if .Values.eni }}
         - cilium-operator-aws
