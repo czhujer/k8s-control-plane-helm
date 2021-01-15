@@ -18,7 +18,17 @@ spec:
     - {{ .Release.Namespace }}
   endpoints:
   - port: metrics
-    interval: 10s
+{{- if .Values.operator.prometheus.serviceMonitor.interval }}
+    interval: {{ .Values.operator.prometheus.serviceMonitor.interval }}
+{{- end }}
+{{- if .Values.operator.prometheus.serviceMonitor.metricRelabelings }}
+    metricRelabelings:
+{{ toYaml .Values.operator.prometheus.serviceMonitor.metricRelabelings | indent 6 }}
+{{- end }}
+{{- if .Values.operator.prometheus.serviceMonitor.relabelings }}
+    relabelings:
+{{ toYaml .Values.operator.prometheus.serviceMonitor.relabelings | indent 6 }}
+{{- end }}
     honorLabels: true
     path: /metrics
 {{- end }}
