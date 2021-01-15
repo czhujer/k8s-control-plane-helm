@@ -18,17 +18,17 @@ spec:
     - {{ .Release.Namespace }}
   endpoints:
   - port: metrics
-    {{- if .Values.operator.prometheus.serviceMonitor.interval }}
+{{- if .Values.operator.prometheus.serviceMonitor.interval }}
     interval: {{ .Values.operator.prometheus.serviceMonitor.interval }}
-    {{- end }}
-    {{- if .Values.operator.prometheus.serviceMonitor.metricRelabelings }}
+{{- end }}
+{{- if .Values.operator.prometheus.serviceMonitor.metricRelabelings }}
     metricRelabelings:
-    {{ tpl (toYaml .Values.operator.prometheus.serviceMonitor.metricRelabelings | indent 6) . }}
-    {{- end }}
-    {{- if .Values.operator.prometheus.serviceMonitor.relabelings }}
+{{ toYaml .Values.operator.prometheus.serviceMonitor.metricRelabelings | indent 6 }}
+{{- end }}
+{{- if .Values.operator.prometheus.serviceMonitor.relabelings }}
     relabelings:
-    {{ toYaml .Values.operator.prometheus.serviceMonitor.relabelings | indent 6 }}
-    {{- end }}
+{{ toYaml .Values.operator.prometheus.serviceMonitor.relabelings | indent 6 }}
+{{- end }}
     honorLabels: true
     path: /metrics
 {{- end }}
