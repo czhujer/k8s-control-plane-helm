@@ -12,8 +12,24 @@ spec:
       interval: {{ .Values.server.prometheus.serviceMonitor.interval }}
       honorLabels: true
       path: /metrics
+{{- if .Values.server.prometheus.serviceMonitor.metricRelabelings }}
+      metricRelabelings:
+{{ toYaml .Values.server.prometheus.serviceMonitor.metricRelabelings | indent 6 }}
+{{- end }}
+{{- if .Values.server.prometheus.serviceMonitor.relabelings }}
+      relabelings:
+{{ toYaml .Values.server.prometheus.serviceMonitor.relabelings | indent 6 }}
+{{- end }}
     - port: metrics2
       interval: {{ .Values.server.prometheus.serviceMonitor.interval }}
       honorLabels: true
       path: /metrics
+{{- if .Values.server.prometheus.serviceMonitor.metricRelabelings }}
+      metricRelabelings:
+{{ toYaml .Values.server.prometheus.serviceMonitor.metricRelabelings | indent 6 }}
+{{- end }}
+{{- if .Values.server.prometheus.serviceMonitor.relabelings }}
+      relabelings:
+{{ toYaml .Values.server.prometheus.serviceMonitor.relabelings | indent 6 }}
+{{- end }}
 {{- end }}
