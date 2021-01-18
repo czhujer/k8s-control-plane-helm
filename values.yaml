@@ -564,3 +564,6 @@ metricsHelper:
     # values for PVC for sync-tokens
     storageClassName: rook-cephfs
     size: 100Mi
+  serviceMonitor:
+    enabled: true
+    tokenFolder: /metrics-sync-tokens
