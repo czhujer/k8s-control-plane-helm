@@ -1,4 +1,4 @@
-{{- if (.Values.metricsRBAC.enable) }}
+{{- if .Values.metricsRBAC.enable }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
