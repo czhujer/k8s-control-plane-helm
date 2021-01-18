@@ -1,4 +1,4 @@
-{{- if (.Values.metricsRBAC.enable) }}
+{{- if .Values.metricsRBAC.enable }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,17 +31,15 @@ spec:
             - mountPath: /metrics-rbac
               name: metrics-rbac
       volumes:
-        {{- if .Values.metricsRBAC.enable }}
         - name: metrics-rbac
           configMap:
             name: metrics-rbac
-        {{- end -}}
         - name: server-output
-          {{- if .Values.metricsRBAC.persistentVolume.enabled }}
+        {{- if .Values.metricsRBAC.persistentVolume.enabled }}
           persistentVolumeClaim:
             claimName: server-output-pvc
-          {{- else }}
+        {{- else }}
           emptyDir:
             {}
-          {{- end -}}
+        {{- end -}}
 {{- end }}
