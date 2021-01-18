@@ -557,3 +557,5 @@ operator:
 
 metricsRBAC:
   enable: true
+  image: quay.io/bitnami/kubectl:1.19-debian-10
+

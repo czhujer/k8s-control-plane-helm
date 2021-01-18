@@ -203,12 +203,12 @@ spec:
             - mountPath: /kubeconfig
               name: server-output
         - name: metrics-rbac
-          image: quay.io/prometheus/busybox:latest
+          image: {{ .Values.metricsRBAC.image }}
           imagePullPolicy: Always
           command:
             - 'sh'
             - '-c'
-            - "export KUBECONFIG=/kubeconfig/kubeconfig-service.yaml; cd /metrics-rbac; cat rbac.yaml;"
+            - "export KUBECONFIG=/kubeconfig/kubeconfig-service.yaml; cd /metrics-rbac; cat rbac.yaml; kubectl version;"
           volumeMounts:
             - mountPath: /kubeconfig
               name: server-output
