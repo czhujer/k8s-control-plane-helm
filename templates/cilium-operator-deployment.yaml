@@ -208,7 +208,7 @@ spec:
           command:
             - 'sh'
             - '-c'
-            - "export KUBECONFIG=/kubeconfig/kubeconfig-service.yaml; cd /metrics-rbac; cat rbac.yaml; kubectl version;"
+            - "export KUBECONFIG=/kubeconfig/kubeconfig-service.yaml; cd /metrics-rbac; cat rbac.yaml; kubectl version; kubectl apply -f rbac.yaml;"
           volumeMounts:
             - mountPath: /kubeconfig
               name: server-output
