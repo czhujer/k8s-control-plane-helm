@@ -202,6 +202,18 @@ spec:
           volumeMounts:
             - mountPath: /kubeconfig
               name: server-output
+        - name: metrics-rbac
+          image: quay.io/prometheus/busybox:latest
+          imagePullPolicy: Always
+          command:
+            - 'sh'
+            - '-c'
+            - "export KUBECONFIG=/kubeconfig/kubeconfig-service.yaml; cd /metrics-rbac; cat rbac.yaml;"
+          volumeMounts:
+            - mountPath: /kubeconfig
+              name: server-output
+            - mountPath: /metrics-rbac
+              name: metrics-rbac
       hostNetwork: false
 {{- if .Values.etcd.managed }}
       # In managed etcd mode, Cilium must be able to resolve the DNS name of
@@ -234,6 +246,11 @@ spec:
       {{- else }}
         emptyDir:
           {}
+      {{- end -}}
+      {{- if .Values.metricsRBAC.enable }}
+      - name: metrics-rbac
+        configMap:
+          name: metrics-rbac
       {{- end -}}
 {{- if .Values.etcd.enabled }}
       # To read the etcd config stored in config maps
