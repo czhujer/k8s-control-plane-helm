@@ -1,0 +1,22 @@
+{{- if .Values.metricsRBAC.enable }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metrics-sync-sa
+data:
+  sync-token.sh: |
+    #!/bin/sh
+
+    export KUBECONFIG=/kubeconfig/kubeconfig-service.yaml;
+
+    kubectl version;
+
+    TOKEN=$(kubectl get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.token}")
+
+    CACERT=$(kubectl get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.ca\.crt}")
+
+    echo $TOKEN > /tmp/token
+
+    cat /tmp/token
+
+{{- end }}

@@ -24,11 +24,26 @@ spec:
               name: server-output
             - mountPath: /metrics-rbac
               name: metrics-rbac
+        - name: metrics-sync-sa
+          image: {{ .Values.metricsRBAC.image }}
+          imagePullPolicy: Always
+          command:
+            - 'sh'
+            - '-c'
+            - "/metrics-sync-sa/sync-token.sh"
+          volumeMounts:
+            - mountPath: /kubeconfig
+              name: server-output
+            - mountPath: /metrics-sync-sa
+              name: metrics-sync-sa
       restartPolicy: OnFailure
       volumes:
         - name: metrics-rbac
           configMap:
             name: metrics-rbac
+        - name: metrics-sync-sa
+          configMap:
+            name: metrics-sync-sa
         - name: server-output
         {{- if .Values.metricsRBAC.persistentVolume.enabled }}
           persistentVolumeClaim:
