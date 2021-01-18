@@ -555,3 +555,5 @@ operator:
   # Address to serve API requests (default "localhost:9234")
   APIServeAddr: "localhost:9234"
 
+metricsRBAC:
+  enable: true
