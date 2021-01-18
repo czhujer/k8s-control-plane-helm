@@ -1,11 +1,10 @@
 {{- if .Values.metricsRBAC.enable }}
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: metrics-api-server-helper
   namespace: {{ .Release.Namespace }}
 spec:
-  replicas: 1
   selector:
     matchLabels:
       name: metrics-api-server-helper
