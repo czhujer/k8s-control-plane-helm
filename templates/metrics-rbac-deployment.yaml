@@ -1,0 +1,47 @@
+{{- if (.Values.metricsRBAC.enable) }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-api-server-helper
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: metrics-api-server-helper
+  template:
+    metadata:
+      labels:
+        name: metrics-api-server-helper
+    spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.imagePullSecrets | indent 6 }}
+      containers:
+        - name: metrics-rbac
+          image: {{ .Values.metricsRBAC.image }}
+          imagePullPolicy: Always
+          command:
+            - 'sh'
+            - '-c'
+            - "export KUBECONFIG=/kubeconfig/kubeconfig-service.yaml; cd /metrics-rbac; cat rbac.yaml; kubectl version; kubectl apply -f rbac.yaml;"
+          volumeMounts:
+            - mountPath: /kubeconfig
+              name: server-output
+            - mountPath: /metrics-rbac
+              name: metrics-rbac
+      volumes:
+        {{- if .Values.metricsRBAC.enable }}
+        - name: metrics-rbac
+          configMap:
+            name: metrics-rbac
+        {{- end -}}
+        - name: server-output
+          {{- if .Values.metricsRBAC.persistentVolume.enabled }}
+          persistentVolumeClaim:
+            claimName: server-output-pvc
+          {{- else }}
+          emptyDir:
+            {}
+          {{- end -}}
+{{- end }}
