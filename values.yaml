@@ -562,5 +562,5 @@ metricsHelper:
   persistentVolume:
     enabled: true
     # values for PVC for sync-tokens
-    storageClassName: "rook-cephfs"
-    size: "100Mi"
+    storageClassName: rook-cephfs
+    size: 100Mi

@@ -46,19 +46,19 @@ spec:
           configMap:
             name: metrics-sync-sa
         - name: server-output
-        {{- if .Values.metricsHelper.persistentVolume.enabled }}
+        {{ if .Values.metricsHelper.persistentVolume.enabled }}
           persistentVolumeClaim:
             claimName: server-output-pvc
-        {{- else }}
+        {{ else }}
           emptyDir:
             {}
-        {{- end -}}
+        {{ end }}
         - name: metrics-sync-tokens
-        {{- if .Values.metricsHelper.persistentVolume.enabled }}
+        {{ if .Values.metricsHelper.persistentVolume.enabled }}
           persistentVolumeClaim:
             claimName: metrics-sync-tokens
-        {{- else }}
+        {{ else }}
           emptyDir:
             {}
-        {{- end -}}
+        {{ end }}
 {{- end }}
