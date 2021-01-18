@@ -561,3 +561,6 @@ metricsHelper:
   image: quay.io/bitnami/kubectl:1.19-debian-10
   persistentVolume:
     enabled: true
+    # values for PVC for sync-tokens
+    storageClassName: "rook-cephfs"
+    size: "100Mi"

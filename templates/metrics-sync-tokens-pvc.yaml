@@ -1,0 +1,17 @@
+{{- if .Values.metricsHelper.enabled -}}
+{{- if .Values.metricsHelper.persistentVolume.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    k8s-app: k3s-server
+  name: metrics-sync-tokens
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: "{{ .Values.metricsHelper.persistentVolume.size }}"
+  storageClassName: {{ .Values.metricsHelper.persistentVolume.storageClassName }}
+{{- end -}}
+{{- end -}}
