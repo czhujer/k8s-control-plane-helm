@@ -29,7 +29,6 @@ spec:
           imagePullPolicy: Always
           command:
             - 'sh'
-            - '-c'
             - "/metrics-sync-sa/sync-token.sh"
           volumeMounts:
             - mountPath: /kubeconfig
