@@ -16,7 +16,7 @@ spec:
       tlsConfig:
         #caFile: "/path/to/the/ca/file"
         insecureSkipVerify: true
-      bearerTokenFile: {{ .Values.metricsHelper.serviceMonitor.tokenFolder }}/{{ .Release.Namespace }}-k3s-server-read-metrics-token
+      bearerTokenFile: {{ .Values.metricsHelper.serviceMonitor.tokenFolder }}/{{ .Release.Namespace }}-k3s-server-read-metrics/token
       relabelings:
         - sourceLabels: [__meta_kubernetes_endpoints_name]
           action: drop
