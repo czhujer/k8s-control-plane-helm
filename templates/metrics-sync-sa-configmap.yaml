@@ -17,7 +17,11 @@ data:
 
     CACERT=$(kubectl -n kube-system get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.ca\.crt}")
 
-    echo $TOKEN > /metrics-sync-tokens/{{ .Release.Namespace }}-k3s-server-read-metrics-token
+    unset KUBECONFIG;
+
+    kubectl --namespace=kube-monitoring create configmap {{ .Release.Namespace }}-k3s-server-read-metrics --from-literal=token=${TOKEN}
+
+    #echo $TOKEN > /metrics-sync-tokens/{{ .Release.Namespace }}-k3s-server-read-metrics-token
 
     #cat /metrics-sync-tokens/{{ .Release.Namespace }}-k3s-server-read-metrics-token
 
