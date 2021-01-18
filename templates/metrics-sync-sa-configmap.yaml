@@ -11,7 +11,7 @@ data:
 
     kubectl version;
 
-    kubectl -n kube-system get secrets;
+    #kubectl -n kube-system get secrets;
 
     TOKEN=$(kubectl -n kube-system get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.token}")
 
@@ -19,6 +19,6 @@ data:
 
     echo $TOKEN > /metrics-sync-tokens/{{ .Release.Namespace }}-k3s-server-read-metrics-token
 
-    cat /metrics-sync-tokens/{{ .Release.Namespace }}-k3s-server-read-metrics-token
+    #cat /metrics-sync-tokens/{{ .Release.Namespace }}-k3s-server-read-metrics-token
 
 {{- end }}
