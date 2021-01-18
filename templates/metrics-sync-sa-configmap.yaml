@@ -11,6 +11,8 @@ data:
 
     kubectl version;
 
+    kubectl get secrets;
+
     TOKEN=$(kubectl get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.token}")
 
     CACERT=$(kubectl get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.ca\.crt}")
