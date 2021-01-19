@@ -1,0 +1,37 @@
+{{- if .Values.metricsHelper.enable }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metrics-rbac
+data:
+  rbac.yaml: |
+    ---
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: read-metrics
+      namespace: kube-system
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRole
+    metadata:
+      name: metrics
+    rules:
+      - nonResourceURLs:
+          - "/metrics"
+        verbs:
+          - get
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: metrics
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: metrics
+    subjects:
+      - kind: ServiceAccount
+        name: read-metrics
+        namespace: kube-system
+{{- end }}

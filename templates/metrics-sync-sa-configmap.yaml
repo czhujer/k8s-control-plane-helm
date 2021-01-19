@@ -1,0 +1,26 @@
+{{- if .Values.metricsHelper.enable }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metrics-sync-sa
+data:
+  sync-token.sh: |
+    #!/bin/sh
+
+    export KUBECONFIG=/kubeconfig/kubeconfig-service.yaml;
+
+    kubectl version;
+
+    TOKEN=$(kubectl -n kube-system get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.token}" |base64 -d)
+
+    CACERT=$(kubectl -n kube-system get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.ca\.crt}" |base64 -d)
+
+    unset KUBECONFIG;
+
+    kubectl --namespace=kube-monitoring create configmap {{ .Release.Namespace }}-k3s-server-read-metrics --from-literal=token=${TOKEN}
+
+    echo $?;
+
+    exit 0;
+
+{{- end }}
