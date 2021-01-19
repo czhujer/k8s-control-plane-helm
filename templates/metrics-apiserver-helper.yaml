@@ -35,8 +35,6 @@ spec:
               name: server-output
             - mountPath: /metrics-sync-sa
               name: metrics-sync-sa
-            - mountPath: /metrics-sync-tokens
-              name: metrics-sync-tokens
       restartPolicy: OnFailure
       volumes:
         - name: metrics-rbac
@@ -49,14 +47,6 @@ spec:
         {{ if .Values.metricsHelper.persistentVolume.enabled }}
           persistentVolumeClaim:
             claimName: server-output-pvc
-        {{ else }}
-          emptyDir:
-            {}
-        {{ end }}
-        - name: metrics-sync-tokens
-        {{ if .Values.metricsHelper.persistentVolume.enabled }}
-          persistentVolumeClaim:
-            claimName: metrics-sync-tokens
         {{ else }}
           emptyDir:
             {}
