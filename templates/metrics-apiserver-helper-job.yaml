@@ -1,0 +1,54 @@
+{{- if .Values.metricsHelper.enable }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: metrics-api-server-helper
+  namespace: {{ .Release.Namespace }}
+spec:
+  template:
+    spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml .Values.imagePullSecrets | indent 6 }}
+      {{- end }}
+      containers:
+        - name: metrics-rbac
+          image: {{ .Values.metricsHelper.image }}
+          imagePullPolicy: Always
+          command:
+            - 'sh'
+            - '-c'
+            - 'export KUBECONFIG=/kubeconfig/kubeconfig-service.yaml; cd /metrics-rbac; cat rbac.yaml; kubectl version; kubectl apply -f rbac.yaml; echo $?'
+          volumeMounts:
+            - mountPath: /kubeconfig
+              name: server-output
+            - mountPath: /metrics-rbac
+              name: metrics-rbac
+        - name: metrics-sync-sa
+          image: {{ .Values.metricsHelper.image }}
+          imagePullPolicy: Always
+          command:
+            - 'sh'
+            - "/metrics-sync-sa/sync-token.sh"
+          volumeMounts:
+            - mountPath: /kubeconfig
+              name: server-output
+            - mountPath: /metrics-sync-sa
+              name: metrics-sync-sa
+      restartPolicy: OnFailure
+      volumes:
+        - name: metrics-rbac
+          configMap:
+            name: metrics-rbac
+        - name: metrics-sync-sa
+          configMap:
+            name: metrics-sync-sa
+        - name: server-output
+        {{ if .Values.metricsHelper.persistentVolume.enabled }}
+          persistentVolumeClaim:
+            claimName: server-output-pvc
+        {{ else }}
+          emptyDir:
+            {}
+        {{ end }}
+{{- end }}

@@ -555,3 +555,14 @@ operator:
   # Address to serve API requests (default "localhost:9234")
   APIServeAddr: "localhost:9234"
 
+# for monitoring api-server
+metricsHelper:
+  enable: true
+  image: quay.io/bitnami/kubectl:1.19-debian-10
+  persistentVolume:
+    enabled: true
+  serviceMonitor:
+    enabled: true
+    tokenFolder: /metrics-sync-tokens
+    # relabeling for cluster label
+    #clusterName: ""
