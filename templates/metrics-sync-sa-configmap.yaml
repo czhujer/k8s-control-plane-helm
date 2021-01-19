@@ -13,9 +13,9 @@ data:
 
     #kubectl -n kube-system get secrets;
 
-    TOKEN=$(kubectl -n kube-system get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.token}")
+    TOKEN=$(kubectl -n kube-system get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.token}" |base64 -d)
 
-    CACERT=$(kubectl -n kube-system get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.ca\.crt}")
+    CACERT=$(kubectl -n kube-system get secrets -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='read-metrics')].data.ca\.crt}" |base64 -d)
 
     unset KUBECONFIG;
 
