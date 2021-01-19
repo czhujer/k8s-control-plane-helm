@@ -564,3 +564,5 @@ metricsHelper:
   serviceMonitor:
     enabled: true
     tokenFolder: /metrics-sync-tokens
+    # relabeling for cluster label
+    #clusterName: ""

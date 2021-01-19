@@ -21,7 +21,11 @@ spec:
         - sourceLabels: [__meta_kubernetes_endpoints_name]
           action: drop
           regex: .*nodeport.*
-        - replacement: uacl-test3
+        {{ if .Values.metricsHelper.serviceMonitor.clusterName }}
+        - replacement: {{ .Values.metricsHelper.serviceMonitor.clusterName }}
           targetLabel: cluster
-
+        {{ else }}
+        - replacement: {{ .Release.Namespace }}
+          targetLabel: cluster
+        {{ end }}
 {{- end }}
