@@ -6,11 +6,11 @@ server:
   replicas: 1
 
   updateStrategy:
-    type: RollingUpdate
+    type: Recreate
 
   image:
     repository: rancher/k3s
-    tag: v1.19.4-k3s1
+    tag: v1.19.7-k3s1
     pullPolicy: Always
 
   prometheus:
