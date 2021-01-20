@@ -42,7 +42,7 @@ spec:
           resources: {}
           volumeMounts:
             - name: k3s-server-datadir
-              mountPath: /var/lib/rancher/k3s
+              mountPath: {{ .Values.server.persistentVolumeData.mountPath }}
             - name: server-output
               mountPath: {{ .Values.server.persistentVolume.mountPath }}
             - name: server-tmpfs0

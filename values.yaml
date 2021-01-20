@@ -53,10 +53,10 @@ server:
     sizeLimit: ""
 
   persistentVolumeData:
-    enabled: false
-    size: 100Mi
-    mountPath: /output
-    storageClassName: rook-cephfs
+    enabled: true
+    size: 1Gi
+    mountPath: /var/lib/rancher/k3s
+    storageClassName: rook-ceph-block
 
   emptyDirData:
     sizeLimit: ""
