@@ -6,7 +6,7 @@ server:
   replicas: 1
 
   updateStrategy:
-    type: RollingUpdate
+    type: Recreate
 
   image:
     repository: rancher/k3s
