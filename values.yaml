@@ -14,6 +14,12 @@ server:
     tag: v1.19.7-k3s1
     pullPolicy: Always
 
+  oidc:
+    issuer_url: https://auth2.szn.cz
+    client_id: uiGfwMhmhWanm6g5mzxfIGPysaAvxvubZYsPIDF8
+    username_claim: email
+    groups_claim: groups
+
   prometheus:
     enabled: true
     serviceMonitor:

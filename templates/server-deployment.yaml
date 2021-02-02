@@ -27,6 +27,10 @@ spec:
             - --disable=metrics-server
             - --disable-agent
             - --tls-san={{ .Values.server.k3sTLSSan }}
+            - --kube-apiserver-arg=oidc-issuer-url={{ .Values.server.oidc.issuer_url }}
+            - --kube-apiserver-arg=oidc-client-id={{ .Values.server.oidc.client_id }}
+            - --kube-apiserver-arg=oidc-username-claim={{ .Values.server.oidc.username_claim }}
+            - --kube-apiserver-arg=oidc-groups-claim={{ .Values.server.oidc.groups_claim }}
           env:
             - name: K3S_KUBECONFIG_MODE
               value: "666"
