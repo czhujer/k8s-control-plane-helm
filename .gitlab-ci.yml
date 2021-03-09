@@ -1,0 +1,67 @@
+---
+# image: docker.dev.dszn.cz/generic/ci-scripts:latest
+# image: docker.ops.iszn.cz/sklik-devops/ci-scripts:1.52.0
+# CI_IMAGE: docker.dev.dszn.cz/admins3/ansible-ci:0.2.3
+image: $CI_IMAGE
+
+variables:
+  # KIND_VERSION: v0.10.0
+  # HADOLINT_VERSION: v1.22.1
+  TRIVY_VERSION: 0.16.0
+  # ARGOCD_VERSION: "v1.8.3"
+  # HELM_VERSION: "v3.5.2"
+  # SHELLCHECK_VERSION: "stable"  # or "v0.4.7", or "latest"
+  # YQ_VERSION: "v4.2.0"
+  # YQ_BINARY: "yq_linux_amd64"
+  # SHELLCHECK_URL: "https://github.com/koalaman/shellcheck/releases/download/${SHELLCHECK_VERSION}/shellcheck-${SHELLCHECK_VERSION}.linux.x86_64.tar.xz"
+  CI_IMAGE: docker.ops.iszn.cz/uacl/ansible-docker:v0.4.2
+  # SERVERSPEC_IMAGE: docker.ops.iszn.cz/uacl/serverspec-docker:v0.1
+
+stages:
+  - initial-checks
+  - helm-tests
+
+trivy-scan-ci-image:
+  stage: initial-checks
+  script:
+    - mkdir -p ci-utils
+    # trivy
+    - if [ ! -f ci-utils/trivy ]; then curl -sSL -o - "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz" | tar -xvzf -; fi;
+    - if [ ! -f ci-utils/trivy ]; then mv trivy ci-utils; fi;
+    - if [ ! -x ci-utils/trivy ]; then chmod +x ci-utils/trivy; fi;
+    - ci-utils/trivy --version
+    # Build report
+    - |
+      ci-utils/trivy --exit-code 0 --cache-dir .trivycache/ --no-progress \
+          -o gl-container-scanning-report.json "${CI_IMAGE}"
+    # Print report
+    - ci-utils/trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --severity HIGH "${CI_IMAGE}"
+    # Fail on critical vulnerabilities
+    - ci-utils/trivy --exit-code 1 --cache-dir .trivycache/ --severity CRITICAL --ignore-unfixed --no-progress "${CI_IMAGE}"
+  artifacts:
+    when: always
+    paths:
+      - gl-container-scanning-report.json
+  only:
+    refs:
+      - merge_requests
+
+yaml-lint:
+  stage: initial-checks
+  script:
+    - python --version; pip --version; yamllint --version
+    - yamllint -c .yamllint.yaml -f colored .
+  allow_failure: true
+  only:
+    refs:
+      - merge_requests
+
+helm-syntax-check:
+  stage: helm-tests
+  script:
+    - helm version
+    - helm template .
+  only:
+    refs:
+      - merge_requests
+

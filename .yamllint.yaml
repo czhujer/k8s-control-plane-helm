@@ -1,0 +1,17 @@
+---
+ignore: |
+  venv/lib/python3.7/site-packages/ansible_collections
+  venv/lib/python3.7/site-packages/ansible
+  venv/lib/python3.7/site-packages/ansible_test
+  ansible/roles/k8s-argocd/files/sa-for-ci-cd.yaml
+  *dashboard*
+  .gitlab-ci.yml
+
+extends: default
+
+rules:
+  line-length:
+    max: 180
+    level: warning
+  empty-lines:
+    max: 1
