@@ -130,7 +130,7 @@ spec:
 {{- end }}
 {{- range $key, $value := .Values.operator.extraEnv }}
         - name: {{ $key }}
-          value: {{ $value }}
+          value: {{ $value | quote }}
 {{- end }}
 {{- if .Values.eni }}
         image: {{ .Values.operator.image.repository }}-aws:{{ .Values.operator.image.tag }}
