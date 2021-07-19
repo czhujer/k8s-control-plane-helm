@@ -168,11 +168,15 @@ spec:
         - mountPath: /var/lib/etcd-config
           name: etcd-config-path
           readOnly: true
-{{- if or .Values.etcd.ssl .Values.etcd.managed }}
+  {{- if .Values.etcd.csi }}
+        - mountPath: /www/csi
+          name: csi-volume
+          readOnly: true
+  {{- else if or .Values.etcd.ssl .Values.etcd.managed }}
         - mountPath: /var/lib/etcd-secrets
           name: etcd-secrets
           readOnly: true
-{{- end }}
+  {{- end }}
 {{- end }}
 {{- if .Values.kubeConfigPath }}
         - mountPath: {{ .Values.kubeConfigPath }}
@@ -244,14 +248,22 @@ spec:
             path: etcd.config
           name: cilium-config
         name: etcd-config-path
-{{- if or .Values.etcd.ssl .Values.etcd.managed }}
+  {{- if .Values.etcd.csi }}
+      - name: csi-volume
+        csi:
+          driver: cz.scif.csi.sasanka
+          nodePublishSecretRef:
+            name: csi-token
+          volumeAttributes:
+            namespace: "~cilium-uacl-etcd-client"
+  {{- else if or .Values.etcd.ssl .Values.etcd.managed }}
         # To read the k8s etcd secrets in case the user might want to use TLS
       - name: etcd-secrets
         secret:
           defaultMode: 420
           optional: true
           secretName: cilium-etcd-secrets
-{{- end }}
+  {{- end }}
 {{- end }}
 {{- if .Values.kubeConfigPath }}
       - hostPath:
