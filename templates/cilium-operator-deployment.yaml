@@ -255,7 +255,7 @@ spec:
           nodePublishSecretRef:
             name: {{ .Values.etcd.csi.nodePublishSecretName | default "csi-sasanka-token" }}
           volumeAttributes:
-            namespace: {{ .Values.etcd.csi.namespace | default "~cilium-uacl-etcd-client" }}
+            namespace: "{{ .Values.etcd.csi.namespace | default "~cilium-uacl-etcd-client"}}"
   {{- else if or .Values.etcd.ssl .Values.etcd.managed }}
         # To read the k8s etcd secrets in case the user might want to use TLS
       - name: etcd-secrets
