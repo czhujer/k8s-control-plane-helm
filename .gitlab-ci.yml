@@ -1,7 +1,4 @@
 ---
-# image: docker.dev.dszn.cz/generic/ci-scripts:latest
-# image: docker.ops.iszn.cz/sklik-devops/ci-scripts:1.52.0
-# CI_IMAGE: docker.dev.dszn.cz/admins3/ansible-ci:0.2.3
 image: $CI_IMAGE
 
 variables:
@@ -14,8 +11,7 @@ variables:
   # YQ_VERSION: "v4.2.0"
   # YQ_BINARY: "yq_linux_amd64"
   # SHELLCHECK_URL: "https://github.com/koalaman/shellcheck/releases/download/${SHELLCHECK_VERSION}/shellcheck-${SHELLCHECK_VERSION}.linux.x86_64.tar.xz"
-  CI_IMAGE: docker.ops.iszn.cz/uacl/ansible-docker:v0.4.2
-  # SERVERSPEC_IMAGE: docker.ops.iszn.cz/uacl/serverspec-docker:v0.1
+  CI_IMAGE: docker.ops.iszn.cz/uacl/ci-tools-docker:v1.2
 
 stages:
   - initial-checks
