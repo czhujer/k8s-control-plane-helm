@@ -65,9 +65,9 @@ data:
 {{- end }}
 {{- end }}
   {{- if .Values.etcd.csi }}
-    trusted-ca-file: {{ .Values.etcd.ca }}
-    key-file: {{ .Values.etcd.key }}
-    cert-file: {{ .Values.etcd.cert }}
+    trusted-ca-file: {{ required "An etcd.ca variable is required" .Values.etcd.ca }}
+    key-file: {{ required "An etcd.key variable is required" .Values.etcd.key }}
+    cert-file: {{ required "An etcd.cert variable is required" .Values.etcd.cert }}
   {{- else if or .Values.etcd.ssl .Values.etcd.managed }}
     trusted-ca-file: '/var/lib/etcd-secrets/etcd-client-ca.crt'
     key-file: '/var/lib/etcd-secrets/etcd-client.key'
