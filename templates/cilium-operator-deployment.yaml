@@ -251,9 +251,9 @@ spec:
   {{- if .Values.etcd.csi }}
       - name: csi-volume
         csi:
-          driver: {{ .Values.etcd.csi.driver | default "cz.scif.csi.sasanka" }}
+          driver: "{{ .Values.etcd.csi.driver | default "cz.scif.csi.sasanka"}}"
           nodePublishSecretRef:
-            name: {{ .Values.etcd.csi.nodePublishSecretName | default "csi-sasanka-token" }}
+            name: "{{ .Values.etcd.csi.nodePublishSecretName | default "csi-sasanka-token"}}"
           volumeAttributes:
             namespace: "{{ .Values.etcd.csi.namespace | default "~cilium-uacl-etcd-client"}}"
   {{- else if or .Values.etcd.ssl .Values.etcd.managed }}
