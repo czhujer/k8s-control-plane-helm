@@ -251,7 +251,7 @@ spec:
   {{- if .Values.etcd.csi }}
       - name: csi-volume
         csi:
-          driver: {{ .Values.etcd.csi.driver }}
+          driver: {{ .Values.etcd.csi.driver | quote }}
 {{- if .Values.etcd.csi.nodePublishSecretName }}
           nodePublishSecretRef:
             name: {{ .Values.etcd.csi.nodePublishSecretName }}
