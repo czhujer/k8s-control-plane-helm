@@ -11,7 +11,7 @@ server:
 
   image:
     repository: rancher/k3s
-    tag: v1.19.7-k3s1
+    tag: v1.19.9-k3s1
     pullPolicy: Always
 
   oidc:
@@ -80,7 +80,7 @@ kubestatemetrics:
 
   image:
     repository: quay.io/coreos/kube-state-metrics
-    tag: v1.9.7
+    tag: v1.9.8
     pullPolicy: Always
 
   ## Node labels for pod assignment
@@ -417,7 +417,7 @@ operator:
   # -- cilium-operator image.
   image:
     repository: quay.io/cilium/operator
-    tag: latest
+    tag: stable
     pullPolicy: Always
 
   # -- Number of replicas to run for the cilium-operator deployment
