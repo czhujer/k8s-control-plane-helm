@@ -339,6 +339,9 @@ etcd:
   # running.
   k8sService: false
 
+  # control secrets and mounts for etcd certs
+  tls: false
+
   # csi secret drivers support
   csi:
     enabled: false
