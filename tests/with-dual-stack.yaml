@@ -1,0 +1,10 @@
+---
+ipv4:
+  enabled: true
+ipv6:
+  enabled: true
+ipam:
+  operator:
+    clusterPoolIPv4PodCIDR: "10.247.2.0/24"
+    clusterPoolIPv6PodCIDR: "2a02:598:247:2::0/96"
+    clusterPoolIPv6MaskSize: "112"
