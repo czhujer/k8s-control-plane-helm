@@ -571,6 +571,10 @@ operator:
   # Address to serve API requests (default "localhost:9234")
   APIServeAddr: "localhost:9234"
 
+  # sed for fix IP address in kubeconfig
+  initCopyconfig:
+    enabled: true
+
 # for monitoring api-server
 metricsHelper:
   enable: true
