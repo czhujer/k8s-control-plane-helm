@@ -4,7 +4,7 @@ image: $CI_IMAGE
 variables:
   # KIND_VERSION: v0.10.0
   # HADOLINT_VERSION: v1.22.1
-  TRIVY_VERSION: 0.16.0
+  TRIVY_VERSION: 0.18.3
   # ARGOCD_VERSION: "v1.8.3"
   # HELM_VERSION: "v3.5.2"
   # SHELLCHECK_VERSION: "stable"  # or "v0.4.7", or "latest"
@@ -57,7 +57,11 @@ helm-syntax-check:
   script:
     - helm version
     - helm template .
+    - |
+      for f in tests/*.yaml; do
+        echo "Testing with values $f ...";
+        helm template . --values="$f";
+      done
   only:
     refs:
       - merge_requests
-
