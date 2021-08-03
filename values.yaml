@@ -339,6 +339,11 @@ etcd:
   # running.
   k8sService: false
 
+  # csi secret drivers support
+  csi: false
+    driver: "cz.scif.csi.sasanka"
+    # nodePublishSecretName: "csi-sasanka-token"
+    # namespace: "~cilium-uacl-client"
 # -- Install the cilium agent resources.
 agent: false
 

@@ -251,11 +251,15 @@ spec:
   {{- if .Values.etcd.csi }}
       - name: csi-volume
         csi:
-          driver: {{ .Values.etcd.csi.driver | default "cz.scif.csi.sasanka" }}
+          driver: {{ .Values.etcd.csi.driver }}
+{{- if .Values.etcd.csi.nodePublishSecretName }}
           nodePublishSecretRef:
-            name: {{ .Values.etcd.csi.nodePublishSecretName | default "csi-sasanka-token" }}
+            name: {{ .Values.etcd.csi.nodePublishSecretName }}
+{{- end }}
+{{- if .Values.etcd.csi.namespace }}
           volumeAttributes:
-            namespace: {{ .Values.etcd.csi.namespace | default "~cilium-uacl-client" }}
+            namespace: {{ .Values.etcd.csi.namespace }}
+{{- end }}
   {{- else if or .Values.etcd.ssl .Values.etcd.managed }}
         # To read the k8s etcd secrets in case the user might want to use TLS
       - name: etcd-secrets
