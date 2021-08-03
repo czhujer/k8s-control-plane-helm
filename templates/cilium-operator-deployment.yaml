@@ -168,7 +168,7 @@ spec:
         - mountPath: /var/lib/etcd-config
           name: etcd-config-path
           readOnly: true
-  {{- if .Values.etcd.csi }}
+  {{- if .Values.etcd.csi.enabled }}
         - mountPath: {{ .Values.etcd.csi.mountPath }}
           name: csi-volume
           readOnly: true
@@ -248,7 +248,7 @@ spec:
             path: etcd.config
           name: cilium-config
         name: etcd-config-path
-  {{- if .Values.etcd.csi }}
+  {{- if .Values.etcd.csi.enabled }}
       - name: csi-volume
         csi:
           driver: {{ .Values.etcd.csi.driver | quote }}

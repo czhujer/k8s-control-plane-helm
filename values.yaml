@@ -340,7 +340,8 @@ etcd:
   k8sService: false
 
   # csi secret drivers support
-  csi: false
+  csi:
+    enabled: false
     driver: "cz.scif.csi.sasanka"
     mountPath: /tls
     # nodePublishSecretName: "csi-sasanka-token"
