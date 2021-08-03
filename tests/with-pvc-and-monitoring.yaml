@@ -1,0 +1,20 @@
+---
+server:
+  serviceNodeport:
+    portApiServer: "32443"
+  persistentVolume:
+    enabled: true
+  prometheus:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "uacl-area-bm-lab1"
+operator:
+  persistentVolume:
+    enabled: true
+  APIServeAddr: ":9234"
+  prometheus:
+    serviceMonitor:
+      relabelings:
+        - targetLabel: "cluster"
+          replacement: "uacl-area-bm-lab1"

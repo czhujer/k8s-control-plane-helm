@@ -1,0 +1,10 @@
+---
+server:
+  serviceNodeport:
+    portApiServer: "32443"
+  persistentVolume:
+    enabled: true
+operator:
+  persistentVolume:
+    enabled: true
+  APIServeAddr: ":9234"
