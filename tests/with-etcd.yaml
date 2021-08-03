@@ -1,0 +1,8 @@
+---
+etcd:
+  enabled: true
+  endpoints:
+    - https://cilium-etcd-0.cilium-etcd-headless.uacl-area-ops-lab1.svc.cluster.local:2379
+  ca: /www/csi/certs/uacl-area-ops-lab1-ca.ko.iszn.cz/ca
+  key: /www/csi/certs/uacl-area-ops-lab1.ko.iszn.cz/rsa-key
+  cert: /www/csi/certs/uacl-area-ops-lab1.ko.iszn.cz/rsa-cert
