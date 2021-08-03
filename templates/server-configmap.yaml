@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-config
+data:
+  audit-policy.yaml: |
+    apiVersion: audit.k8s.io/v1
+    kind: Policy
+    rules:
+    # log changes to CNPs at RequestResponse level
+    - level: Metadata
+      resources:
+      - group: "cilium.io"
+        resources:
+        - ciliumnetworkpolicies
+        - ciliumclusterwidenetworkpolicies
+        verbs: ["create", "patch", "update", "delete"]
+
+    # log everything else at None level
+    - level: None
+      omitStages:
+      - RequestReceived

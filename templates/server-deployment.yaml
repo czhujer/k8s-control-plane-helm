@@ -33,6 +33,11 @@ spec:
             - --kube-apiserver-arg=oidc-username-claim={{ .Values.server.oidc.username_claim }}
             - --kube-apiserver-arg=oidc-groups-claim={{ .Values.server.oidc.groups_claim }}
             {{ end }}
+
+            {{ if .Values.server.auditLogs }}
+            - --kube-apiserver-arg=audit-log-path=/var/lib/rancher/audit/audit.log
+            - --kube-apiserver-arg=audit-policy-file=/conf/audit-policy.yaml
+            {{ end }}
           env:
             - name: K3S_KUBECONFIG_MODE
               value: "666"
@@ -55,6 +60,13 @@ spec:
               mountPath: /run
             - name: server-tmpfs1
               mountPath: /var/run
+
+            {{ if .Values.server.auditLogs }}
+            - mountPath: /conf/audit-policy.yaml
+              name: audit-policy-volume
+              subPath: audit-policy.yaml
+            {{ end }}
+
 {{- if .Values.kubestatemetrics.sidecar.enabled }}
         - name: kube-state-metrics
           args:
@@ -188,6 +200,12 @@ spec:
           {{- else }}
             {}
           {{- end -}}
+        {{- end }}
+        {{- if .Values.server.auditLogs }}
+        - name: audit-policy-volume
+          configMap:
+            defaultMode: 420
+            name: server-config
         {{- end }}
         - name: server-tmpfs0
           emptyDir:
