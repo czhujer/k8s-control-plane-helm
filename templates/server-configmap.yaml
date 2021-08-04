@@ -6,6 +6,8 @@ data:
   audit-policy.yaml: |
     apiVersion: audit.k8s.io/v1
     kind: Policy
+    omitStages:
+    - "RequestReceived"
     rules:
     # log changes to CNPs at RequestResponse level
     - level: Metadata
@@ -17,6 +19,6 @@ data:
         verbs: ["create", "patch", "update", "delete"]
 
     # log everything else at None level
-    - level: None
-      omitStages:
-      - RequestReceived
+    #- level: None
+    #  omitStages:
+    #  - RequestReceived
