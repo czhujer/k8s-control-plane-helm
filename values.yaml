@@ -69,6 +69,8 @@ server:
   emptyDirData:
     sizeLimit: ""
 
+  auditLogs: false
+
 kubestatemetrics:
   standalone:
     enabled: false
