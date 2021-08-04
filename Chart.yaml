@@ -1,10 +1,14 @@
+---
 apiVersion: v1
 description: helm chart for k8s control plane in k8s + cilium-operator
 name: k8s-control-plane
 keywords:
   - kubernetes
   - cilium-operator
-version: 0.8.0
+  - k3s
+version: 0.11.0
 maintainers:
   - name: Patrik Majer
     email: patrik.majer@firma.seznam.cz
+  - name: Adam Bocim
+    email: adam.bocim@firma.seznam.cz
