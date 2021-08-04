@@ -263,7 +263,7 @@ spec:
             namespace: {{ .Values.etcd.csi.namespace | quote }}
 {{- else if .Values.etcd.csi.volumeAttributes }}
           volumeAttributes:
-            {{- toYaml . | trim | nindent 10 }}
+            {{- toYaml .Values.etcd.csi.volumeAttributes | trim | nindent 12 }}
 {{- end }}
   {{- else if or .Values.etcd.ssl .Values.etcd.managed }}
         # To read the k8s etcd secrets in case the user might want to use TLS
