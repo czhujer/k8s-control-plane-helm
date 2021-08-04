@@ -347,7 +347,6 @@ etcd:
     enabled: false
     driver: "cz.scif.csi.sasanka"
     mountPath: /tls
-    mountPathReadOnlyForce: true
     # volumeAttributes:
     # nodePublishSecretName: "csi-sasanka-token"
     # namespace: "~cilium-uacl-client"

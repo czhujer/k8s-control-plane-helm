@@ -171,9 +171,7 @@ spec:
   {{- if .Values.etcd.csi.enabled }}
         - mountPath: {{ .Values.etcd.csi.mountPath }}
           name: csi-volume
-{{- if .Values.etcd.csi.mountPathReadOnlyForce }}
           readOnly: true
-{{- end }}
   {{- else if or .Values.etcd.ssl .Values.etcd.managed }}
         - mountPath: /var/lib/etcd-secrets
           name: etcd-secrets
