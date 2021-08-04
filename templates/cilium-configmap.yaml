@@ -64,7 +64,7 @@ data:
       - {{ . }}
 {{- end }}
 {{- end }}
-  {{- if .Values.etcd.csi }}
+  {{- if .Values.etcd.csi.enabled }}
     trusted-ca-file: {{ required "An etcd.ca variable is required" .Values.etcd.ca }}
     key-file: {{ required "An etcd.key variable is required" .Values.etcd.key }}
     cert-file: {{ required "An etcd.cert variable is required" .Values.etcd.cert }}
